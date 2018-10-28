@@ -1,0 +1,45 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons left>
+            <button navPop ion-button icon-only>
+              <ion-icon color="black" name="arrow-back"></ion-icon>
+            </button>
+          </ion-buttons>
+      <ion-title>Detalle de Nota</ion-title>
+    </ion-navbar>
+   
+  </ion-header>
+  
+  
+  <ion-content >
+        
+        <ion-list *ngFor="let item of datos | async" (click)="editMovie(item)">
+            <ion-item>
+              <ion-thumbnail item-start>
+                <img src="{{item.fotoBal}}">
+              </ion-thumbnail>
+              <h2>{{item.tipo}}</h2>
+              <p>Hayao Miyazaki • 1988</p>
+              <button ion-button clear item-end>View</button>
+            </ion-item>
+          </ion-list>
+  <!--  <ion-list>
+  
+      <ion-item>
+        <ion-label floating>Título</ion-label>
+        <ion-input type="text" [(ngModel)]="ciudades.nombre"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Descripción</ion-label>
+        <ion-textarea ></ion-textarea>
+      </ion-item>
+  
+    </ion-list>
+    <div padding>
+      <button ion-button block (click)="addNote()">Guardar Nota</button>
+      <button *ngIf="id != 0" ion-button block (click)="deleteNote()" color="danger">Eliminar Nota</button>
+    </div>-->
+  </ion-content>
+  

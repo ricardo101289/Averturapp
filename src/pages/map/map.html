@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Map</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="map-page">
+  <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas">
+    
+  </div>
+  <div class="row">
+    <div class="example-1 card">
+      <div class="wrapper">
+      
+        <div class="data">
+          <div class="content">
+            <span class="author">Jane Doe</span>
+            <h1 class="title"><a href="#">Boxing icon has the will for a couple more fights</a></h1>
+            <p class="text">The highly anticipated world championship fight will take place at 10am and is the second major boxing blockbuster in the nation after 43 years.</p>
+            <label for="show-menu" class="menu-button"><span></span></label>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  <button ion-button block color="dark" tappable (click)="signOut()">
+      Regístrate
+    </button>
+</ion-content>

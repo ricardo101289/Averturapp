@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Speakers</ion-title>
+    
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+         <ion-card class="model-card" (click)="presentModal()">
+            <gallery-poster></gallery-poster>
+          </ion-card>
+
+          <ion-card *ngFor="let item of  datos$ | async" class="model-card">       
+        <ion-row>
+        <ion-col col-10>
+         <ion-item>
+    
+        <ion-avatar item-start>
+          <img src="{{item.perfilURL}}">
+        </ion-avatar>
+        <h2 style="font-weight: bold">{{item.nombreUser}}</h2>
+        <p>{{item.fecha}}</p>
+      
+      </ion-item> 
+    </ion-col >
+    <ion-col col-2>
+      <button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 9px" (click)="presentPostPopover()">
+        <ion-icon name="more"></ion-icon>
+    </button>
+    </ion-col>
+  </ion-row>
+
+    
+
+          </ion-card>
+
+          
+ 
+
+   
+  
+</ion-content>
