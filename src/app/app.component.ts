@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -7,7 +7,7 @@ import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../providers/auth/auth-service';
 import { NavController } from 'ionic-angular';
 import { UsuarioPage } from '../pages/usuario/usuario';
-import { SlidersPage} from '../pages/sliders/sliders';
+import { SlidersPage } from '../pages/sliders/sliders';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
 
@@ -20,50 +20,47 @@ export interface MenuItem {
   component: any;
   icon: string;
 }
-/*       <ion-avatar item-left>
-            <img [src]="user.photo || 'assets/img/profile.png'" />
-        </ion-avatar>
-          <ion-input type="text" placeholder="What's on your mind?"> 
-        </ion-input>
-
-        <ion-icon name="aperture" item-right></ion-icon>
-       */
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any;
   appMenuItems: Array<MenuItem>;
   appMenuItems2: Array<MenuItem>;
-
   public navCtrl: NavController;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public afAuth: AngularFireAuth,
-    private authService: AuthService,) {
 
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    public afAuth: AngularFireAuth,
+    private authService: AuthService,
+  ) {
     afAuth.authState.subscribe(user => {
       if (user) {
-        this.rootPage =HomePage ;
-    this.usuarioCurren();
-        
+        this.rootPage = HomePage;
+        this.usuarioCurren();
       } else {
-        this.rootPage =SlidersPage;// PrincipalPage;//
+        this.rootPage = SlidersPage;// PrincipalPage;//
       }
     });
+
     this.appMenuItems = [
-      {title: 'Home', component: HomePage, icon: 'home'},
-      { title: 'Places', component:MapPage,  icon: 'md-globe' },
+      { title: 'Home', component: HomePage, icon: 'home' },
+      { title: 'Places', component: MapPage, icon: 'md-globe' },
       { title: 'mi ubicacion', component: MapPage, icon: 'logo-rss' },
       { title: 'Cotact', component: AboutPage, icon: 'md-mail' },
-      { title: 'About', component:AboutPage, icon: 'information-circle' },
+      { title: 'About', component: AboutPage, icon: 'information-circle' },
 
-     // {title: 'Local Weather', component: LocalWeatherPage, icon: 'partly-sunny'}
+      // {title: 'Local Weather', component: LocalWeatherPage, icon: 'partly-sunny'}
     ];
 
-this.appMenuItems2 = [
+    this.appMenuItems2 = [
       { title: 'Account', component: UsuarioPage, icon: 'person' },
     ];
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -80,8 +77,8 @@ this.appMenuItems2 = [
   public signOut() {
     this.authService.signOut()
       .then(() => {
-        this.rootPage=LoginPage;
-      }) 
+        this.rootPage = LoginPage;
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -89,52 +86,37 @@ this.appMenuItems2 = [
 
   public usu() {
     this.nav.push(UsuarioPage);
-     
-}
-public movi   : any;
 
-usuarioCurren(){
-  this.movi= this.getUsuario();
   }
 
-  getUsuario() :Observable<any>
-   {
+  public movi: any;
 
-  return new Observable(observer =>
-    {
-   
-       firebase.database().ref('/AdventureApp/Usuarios/').orderByKey()
-       .equalTo(this.afAuth.auth.currentUser.uid).once('value', (items : any) =>
-    
-      {
-      let user:any=[];
+  usuarioCurren() {
+    this.movi = this.getUsuario();
+  }
 
-         items.forEach((item) =>
-         {
-           user.push({
-            displayName   :item.val().displayName,
-             perfilURL     : item.val().perfilURL,
-            
+  getUsuario(): Observable<any> {
+    return new Observable(observer => {
+      firebase.database().ref('/AdventureApp/Usuarios/').orderByKey()
+        .equalTo(this.afAuth.auth.currentUser.uid).once('value', (items: any) => {
+          let user: any = [];
+          items.forEach((item) => {
+            user.push({
+              displayName: item.val().displayName,
+              perfilURL: item.val().perfilURL,
+
+            });
           });
-         // this.targetas.nombreUser=item.val().displayName;
-          //this.targetas.pertilUser=item.val().photoURL;
-
-
-         });
-
-         observer.next(user);
-         observer.complete();
-      },
-      (error) =>
-      {
-         console.log("Observer error: ", error);
-         console.dir(error);
-         observer.error(error)
-      });
-
-   });
+          observer.next(user);
+          observer.complete();
+        },
+          (error) => {
+            console.log("Observer error: ", error);
+            console.dir(error);
+            observer.error(error)
+          });
+    });
   }
-
 }
 
 

@@ -4,42 +4,31 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 //import {Keyboard} from '@ionic-native/keyboard';
- 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { IonicStorageModule } from '@ionic/storage';
 import { PostPopover } from '../pages/speaker-list/post-popover';
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EstablecimientosPage } from '../pages/establecimientos/establecimientos';
- 
 import {HttpModule} from '@angular/http';
-
 import { AuthService } from '../providers/auth/auth-service';
 import{EstudianteService} from '../providers/auth/estudiante.service'
-
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { TermsPage } from '../pages/terms/terms';
-
 import {LoginPage} from "../pages/login/login";
 import {RegisterPage} from "../pages/register/register";
- import {RegistroLugaresPage} from '../pages/registro-lugares/registro-lugares';
- 
-
+import {RegistroLugaresPage} from '../pages/registro-lugares/registro-lugares';
 // import services 
 
 // Import library firbease
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-    
 // import pages
 // end import pages
-
- 
 import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { MapPage } from '../pages/map/map';
@@ -57,17 +46,15 @@ import { GalleryPostPage } from '../pages/gallery-post/gallery-post';
 import{ForgotPasswordPage} from '../pages/forgot-password/forgot-password';
 import { DetailPage } from '../pages/detail/detail';
 import { Config } from '../providers/config';
-
 import { GalleryPosterComponent } from './gallery-poster/gallery-poster';
 import {Targetas} from '../providers/auth/targetas'
- 
 const firebaseConfig = {
-   apiKey: "AIzaSyCHthOzqJFKTRH0Q0_TC06dSUsYTf7pHHY",
-  authDomain: "prueba-bda12.firebaseapp.com",
-  databaseURL: "https://prueba-bda12.firebaseio.com",
-  projectId: "prueba-bda12",
-  storageBucket: "prueba-bda12.appspot.com",
-  messagingSenderId: "1073113290610"
+  apiKey: "AIzaSyCa4Rg3iAaSYp1XnqfwmZDA95Kcsy1c5_g",
+  authDomain: "adaventure-d4d5e.firebaseapp.com",
+  databaseURL: "https://adaventure-d4d5e.firebaseio.com",
+  projectId: "adaventure-d4d5e",
+  storageBucket: "adaventure-d4d5e.appspot.com",
+  messagingSenderId: "648450091349"
 };
 
 @NgModule({

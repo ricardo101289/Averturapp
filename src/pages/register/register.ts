@@ -27,7 +27,6 @@ constructor(public navCtrl: NavController,public nav: NavController,
  
 register(){
     if(this.isterms) {
-
        var toaster = this.toastCtrl.create({
            duration: 3000,
            position: 'bottom'
@@ -47,6 +46,7 @@ register(){
            .then((res: any) => {
                this.popToRoot();
             }).catch((err) => {
+              console.log(err);
               
               this.handleError(err)
             });
