@@ -18,9 +18,9 @@ export class RegisterPage {
 
 
     constructor(
-        public navCtrl: NavController, 
+        public navCtrl: NavController,
         public nav: NavController,
-        public loadingCtrl: LoadingController, 
+        public loadingCtrl: LoadingController,
         public toastCtrl: ToastController,
         private authService: AuthService,
         public config: Config,
@@ -31,8 +31,8 @@ export class RegisterPage {
     register() {
         if (this.isterms) {
             if (this.usuarios.email == null || this.usuarios.password == null || this.usuarios.nombre == null) {
-                this.presentAlert("", "Por favor complete todos los campos") 
-            } else if(!this.checkEmail(this.usuarios.email)){
+                this.presentAlert("", "Por favor complete todos los campos")
+            } else if (!this.checkEmail(this.usuarios.email)) {
                 this.presentAlert("", "Email incorrecto")
             } else if (this.usuarios.password.length < 7) {
                 this.presentAlert("", "Por seguridad su contraseña debe contener al menos 7 caracteres")
@@ -47,13 +47,13 @@ export class RegisterPage {
         }
     }
 
-    createUser(){
+    createUser() {
         this.authService.createUserWithEmailAndPassword(this.usuarios)
-        .then((res: any) => {
-            this.popToRoot();
-        }).catch((err) => {
-            this.presentAlert("Upss...", "Ocurrio un error por favor vuelve a intentarlo")
-        });
+            .then((res: any) => {
+                this.popToRoot();
+            }).catch((err) => {
+                this.presentAlert("Upss...", "Ocurrio un error por favor vuelve a intentarlo")
+            });
     }
 
 
@@ -83,7 +83,7 @@ export class RegisterPage {
         }
     }
 
-    checkEmail(email){
+    checkEmail(email) {
         let expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (!expr.test(email)) {
             return false;
@@ -94,10 +94,10 @@ export class RegisterPage {
 
     presentAlert(title, message) {
         let alert = this.alertCtrl.create({
-          title: title,
-          subTitle: message,
-          buttons: ['Aceptar']
+            title: title,
+            subTitle: message,
+            buttons: ['Aceptar']
         });
         alert.present();
-      }
+    }
 }
