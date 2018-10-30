@@ -15,9 +15,11 @@ export class AuthService {
 
   constructor(private angularFireAuth: AngularFireAuth,
     private db: AngularFireDatabase,
-    private googlePlus: GooglePlus,
+    private gplus: GooglePlus,
     private facebook: Facebook,
-    public afiredatabase: AngularFireDatabase) { }
+    public afiredatabase: AngularFireDatabase,
+    private _firebaseAuth: AngularFireAuth
+  ) { }
   us: any;
   createUser(user: Usuarios) {
     return this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
@@ -122,28 +124,94 @@ export class AuthService {
     return promise;
   }
 
-  signInWithGoogle() {
-    return this.googlePlus.login({
-      'webClientId': '771445921628-ne87d006i61cu47dmne8l1ra1sq0ngps.apps.googleusercontent.com',
-      'offline': true
-    })
-      .then(res => {
-        return this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-          .then((user: firebase.User) => {
-            // atualizando o profile do usuario
-            return user.updateProfile({ displayName: res.displayName, photoURL: res.perfilURL });
-          });
-      });
+  // signInWithGoogle() {
+  //   return this.googlePlus.login({
+  //     'webClientId': '648450091349-k1ies0a10h4atdodmf1vom34sblj6n9f.apps.googleusercontent.com',
+  //     'offline': true
+  //   })
+  //     .then(res => {
+  //       console.log("respuesta linea 131 oauth services");
+  //       console.log(res);
+        
+  //       return this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+  //         .then((user: firebase.User) => {
+  //           console.log("user desde services 136");
+  //           console.log(user);
+            
+  //           // atualizando o profile do usuario
+  //           return user.updateProfile({ displayName: res.displayName, photoURL: res.perfilURL });
+  //         });
+  //     });
+  // }
+
+  async nativeGoogleLogin(): Promise<void> {
+    try {
+  
+      const gplusUser = await this.gplus.login({
+        'webClientId': '648450091349-k1ies0a10h4atdodmf1vom34sblj6n9f.apps.googleusercontent.com',
+        'offline': true,
+      }).then(res =>{
+        console.log("respuesta 154");
+        console.log(res);
+        
+        return  this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken)).then(res =>{
+          console.log("respuesta final ")
+          console.log(res);
+          ;
+          
+        }).catch(error =>{
+          console.log("error");
+          console.log(error);
+          
+        })
+      })
+      
+  
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   signInWithFacebook() {
-    return this.facebook.login(['public_profile', 'email'])
-      .then((res: FacebookLoginResponse) => {
-        //https://developers.facebook.com/docs/graph-api/reference/user
-        //Ao logar com o facebook o profile do usuario é automaticamente atualizado.
+    return this.facebook.login(["email", "public_profile", "user_friends"]).then(res =>{
+      console.log("respuesta de facebook");
+        
+        console.log(res);
         return this.angularFireAuth.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
-      });
+    })
+    // then((res: FacebookLoginResponse) => {
+        
+        
+    //     //https://developers.facebook.com/docs/graph-api/reference/user
+    //     //Ao logar com o facebook o profile do usuario é automaticamente atualizado.
+    //     return this.angularFireAuth.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
+    //   })
+    .catch(error =>{
+      console.log("error facebook login");
+      
+      console.log(error);
+      
+        return error
+      })
   }
+
+
+  // facebookLogin(): Promise<any> {
+  //   return this.facebook.login(['email'])
+  //     .then( response => {
+  //       console.log("auth face");
+  //       console.log(response);
+        
+  //       const facebookCredential = firebase.auth.FacebookAuthProvider
+  //         .credential(response.authResponse.accessToken);
+  //       return (facebookCredential)
+  //       firebase.auth().signInWithCredential(facebookCredential)
+  //         .then( success => { 
+  //           console.log("Firebase success: " + JSON.stringify(success)); 
+  //         });
+  
+  //     }).catch((error) => { console.log(error) });
+  // }
 
 
   // "angularfire2": "^4.0.0-rc.0",

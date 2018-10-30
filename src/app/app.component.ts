@@ -38,14 +38,15 @@ export class MyApp {
     public afAuth: AngularFireAuth,
     private authService: AuthService,
   ) {
-    afAuth.authState.subscribe(user => {
-      if (user) {
-        this.rootPage = HomePage;
-        this.usuarioCurren();
-      } else {
-        this.rootPage = SlidersPage;// PrincipalPage;//
-      }
-    });
+    // afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     this.rootPage = HomePage;
+    //     this.usuarioCurren();
+    //   } else {
+    //     this.rootPage = SlidersPage;// PrincipalPage;//
+    //   }
+    // });
+    this.rootPage = SlidersPage;
 
     this.appMenuItems = [
       { title: 'Home', component: HomePage, icon: 'home' },

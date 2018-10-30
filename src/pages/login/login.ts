@@ -2,17 +2,14 @@ import { Component } from "@angular/core";
 import { NavController, AlertController, ToastController, MenuController, LoadingController } from "ionic-angular";
 import { HomePage } from "../home/home";
 import { RegisterPage } from "../register/register";
-//import { AuthProvider } from '../../services/auth/auth';
 import { Usuarios } from '../../providers/auth/user';
-
-//import { NativeStorage } from '@ionic-native/native-storage';
-//import {HttpClient} from '@angular/common/http'
-//import {Observable} from 'rxjs/Observable'
 import { AuthService } from '../../providers/auth/auth-service';
 import { Events } from 'ionic-angular';
 import { ForgotPasswordPage } from "../forgot-password/forgot-password";
 import { PrincipalPage } from "../principal/principal";
-
+import { Facebook } from '@ionic-native/facebook';
+import * as firebase from 'firebase';
+import { GooglePlus } from '@ionic-native/google-plus';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -24,15 +21,17 @@ export class LoginPage {
   errorMessage: string = '';
 
   constructor(
-    public nav: NavController, 
-    public forgotCtrl: AlertController, 
+    public nav: NavController,
+    public forgotCtrl: AlertController,
     public menu: MenuController,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     private authService: AuthService,
     public loadingCtrl: LoadingController,
-    public events: Events
+    public events: Events,
+    private facebook: Facebook,
+    private googlePlus: GooglePlus
   ) {
   }
 
@@ -42,18 +41,33 @@ export class LoginPage {
   }
 
   login() {
-    this.authService.signInWithEmailAndPassword(this.user).then(res =>{
+    this.authService.signInWithEmailAndPassword(this.user).then(res => {
       console.log(res);
       this.popToRoot();
     }).catch((error) => {
-        this.handleError(error)
-      });
+      this.handleError(error)
+    });
   }
 
   signInWithFacebook() {
+
+    // this.fb.login(['public_profile', 'user_friends', 'email'])
+    //   .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+    //   .catch(e => console.log('Error logging into Facebook', e))
+
+
+
+
+
+    console.log("call login to facebook");
+    
     this.authService.signInWithFacebook()
-      .then(() => {
+      .then(res =>{
+        console.log("login desde login");
+        
+        console.log(res);
         this.popToRoot();
+        
       })
       .catch((error) => {
         this.handleError(error);
@@ -61,14 +75,33 @@ export class LoginPage {
       });
   }
 
+  // signInWithFacebook(): Promise<any> {
+  //   return this.facebook.login(['email'])
+  //     .then( response => {
+  //       const facebookCredential = firebase.auth.FacebookAuthProvider
+  //         .credential(response.authResponse.accessToken);
+  
+  //       firebase.auth().signInWithCredential(facebookCredential)
+  //         .then( success => { 
+  //           console.log("Firebase success: " + success); 
+  //         });
+  
+  //     }).catch((error) => { console.log(error) });
+  // }
+
   LoginnWithGoogle() {
-    this.authService.signInWithGoogle()
-      .then(() => {
+    console.log("call to login googl");
+    this.authService.nativeGoogleLogin()
+      .then(res => {
+        console.log("respuesta96 login");
+        
+        console.log(res);
+        
         this.popToRoot();
       })
       .catch((error) => {
         console.log(error);
-        
+
         this.handleError(error);
         //  this.toastCtrl.create({ duration: 3000, position: 'bottom', message: error })
         //  .present();

@@ -16,7 +16,7 @@ import {HttpModule} from '@angular/http';
 import { AuthService } from '../providers/auth/auth-service';
 import{EstudianteService} from '../providers/auth/estudiante.service'
 import { GooglePlus } from '@ionic-native/google-plus';
-import { Facebook } from '@ionic-native/facebook';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { TermsPage } from '../pages/terms/terms';
 import {LoginPage} from "../pages/login/login";
