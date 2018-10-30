@@ -19,7 +19,6 @@ export class LoginPage {
 
   constructor(
     public nav: NavController,
-    public forgotCtrl: AlertController,
     public menu: MenuController,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -67,7 +66,7 @@ export class LoginPage {
   }
 
   forgotPass() {
-    let forgot = this.forgotCtrl.create({
+    let forgot = this.alertCtrl.create({
       title: 'Forgot Password?',
       message: "Enter your email address to send a reset link password.",
       inputs: [

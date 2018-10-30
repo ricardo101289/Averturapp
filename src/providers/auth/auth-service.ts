@@ -25,16 +25,11 @@ export class AuthService {
     return this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
-
-
   getUsuario(): Observable<any> {
-
     return new Observable(observer => {
-
       firebase.database().ref('/AdventureApp/Usuarios/').orderByKey()
         .equalTo(this.angularFireAuth.auth.currentUser.uid).once('value', (items: any) => {
           let user: any = [];
-
           items.forEach((item) => {
             user.push({
               displayName: item.val().displayName,
@@ -43,18 +38,11 @@ export class AuthService {
               id: this.angularFireAuth.auth.currentUser.uid,
 
             });
-            // this.targetas.nombreUser=item.val().displayName;
-            //this.targetas.pertilUser=item.val().photoURL;
-
-
           });
-
           observer.next(user);
           observer.complete();
         },
           (error) => {
-            console.log("Observer error: ", error);
-            console.dir(error);
             observer.error(error)
           });
 
@@ -124,110 +112,40 @@ export class AuthService {
     return promise;
   }
 
-  // signInWithGoogle() {
-  //   return this.googlePlus.login({
-  //     'webClientId': '648450091349-k1ies0a10h4atdodmf1vom34sblj6n9f.apps.googleusercontent.com',
-  //     'offline': true
-  //   })
-  //     .then(res => {
-  //       console.log("respuesta linea 131 oauth services");
-  //       console.log(res);
-        
-  //       return this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-  //         .then((user: firebase.User) => {
-  //           console.log("user desde services 136");
-  //           console.log(user);
-            
-  //           // atualizando o profile do usuario
-  //           return user.updateProfile({ displayName: res.displayName, photoURL: res.perfilURL });
-  //         });
-  //     });
-  // }
 
   async nativeGoogleLogin(): Promise<void> {
     try {
-  
       const gplusUser = await this.gplus.login({
         'webClientId': '648450091349-k1ies0a10h4atdodmf1vom34sblj6n9f.apps.googleusercontent.com',
         'offline': true,
       }).then(res =>{
-        console.log("respuesta 154");
-        console.log(res);
-        
         return  this.angularFireAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken)).then(res =>{
-          console.log("respuesta final ")
-          console.log(res);
-          ;
-          
         }).catch(error =>{
-          console.log("error");
-          console.log(error);
-          
+          return error
         })
       })
       
   
-    } catch(err) {
-      console.log(err)
+    } catch(error) {
+      return error
     }
   }
 
   signInWithFacebook() {
     return this.facebook.login(["email", "public_profile", "user_friends"]).then(res =>{
-      console.log("respuesta de facebook");
-        
-        console.log(res);
         return this.angularFireAuth.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
     })
-    // then((res: FacebookLoginResponse) => {
-        
-        
-    //     //https://developers.facebook.com/docs/graph-api/reference/user
-    //     //Ao logar com o facebook o profile do usuario é automaticamente atualizado.
-    //     return this.angularFireAuth.auth.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
-    //   })
     .catch(error =>{
-      console.log("error facebook login");
-      
-      console.log(error);
-      
         return error
       })
   }
-
-
-  // facebookLogin(): Promise<any> {
-  //   return this.facebook.login(['email'])
-  //     .then( response => {
-  //       console.log("auth face");
-  //       console.log(response);
-        
-  //       const facebookCredential = firebase.auth.FacebookAuthProvider
-  //         .credential(response.authResponse.accessToken);
-  //       return (facebookCredential)
-  //       firebase.auth().signInWithCredential(facebookCredential)
-  //         .then( success => { 
-  //           console.log("Firebase success: " + JSON.stringify(success)); 
-  //         });
-  
-  //     }).catch((error) => { console.log(error) });
-  // }
-
-
-  // "angularfire2": "^4.0.0-rc.0",
-  // 
-  //"firebase": "^5.3.1",
 
   signOut() //: firebase.Promise<any>
   {
     if (this.angularFireAuth.auth.currentUser.providerData.length) {
       for (var i = 0; i < this.angularFireAuth.auth.currentUser.providerData.length; i++) {
         var provider = this.angularFireAuth.auth.currentUser.providerData[i];
-
         if (provider.providerId == firebase.auth.GoogleAuthProvider.PROVIDER_ID) { // Se for o gooogle
-          // o disconnect limpa o oAuth token e tambem esquece qual conta foi selecionada para o login
-          //return this.googlePlus.disconnect()
-          // .then(() => {
           return this.signOutFirebase();
           //  });
         } else if (provider.providerId == firebase.auth.FacebookAuthProvider.PROVIDER_ID) { // Se for facebook
@@ -249,6 +167,4 @@ export class AuthService {
   resetPassword(email: string) {
     return this.angularFireAuth.auth.sendPasswordResetEmail(email);
   }
-
-
 }
