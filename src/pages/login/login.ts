@@ -10,6 +10,7 @@ import { PrincipalPage } from "../principal/principal";
 import { Facebook } from '@ionic-native/facebook';
 import * as firebase from 'firebase';
 import { GooglePlus } from '@ionic-native/google-plus';
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -31,7 +32,7 @@ export class LoginPage {
     public loadingCtrl: LoadingController,
     public events: Events,
     private facebook: Facebook,
-    private googlePlus: GooglePlus
+    private googlePlus: GooglePlus,
   ) {
   }
 
@@ -41,33 +42,22 @@ export class LoginPage {
   }
 
   login() {
-    this.authService.signInWithEmailAndPassword(this.user).then(res => {
-      console.log(res);
-      this.popToRoot();
-    }).catch((error) => {
-      this.handleError(error)
-    });
+    if (this.user.email === "" || this.user.email === undefined || this.user.password === "" || this.user.password === undefined) {
+      this.presentAlert("", "Por favor complete todos los campos")
+    } else {
+      this.authService.signInWithEmailAndPassword(this.user).then(res => {
+        console.log(res);
+        this.popToRoot();
+      }).catch((error) => {
+        this.presentAlert("Upss...", "Ocurrio un error vuelve a intentarlo")
+      });
+    }
   }
 
   signInWithFacebook() {
-
-    // this.fb.login(['public_profile', 'user_friends', 'email'])
-    //   .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
-    //   .catch(e => console.log('Error logging into Facebook', e))
-
-
-
-
-
-    console.log("call login to facebook");
-    
     this.authService.signInWithFacebook()
       .then(res =>{
-        console.log("login desde login");
-        
-        console.log(res);
         this.popToRoot();
-        
       })
       .catch((error) => {
         this.handleError(error);
@@ -75,36 +65,13 @@ export class LoginPage {
       });
   }
 
-  // signInWithFacebook(): Promise<any> {
-  //   return this.facebook.login(['email'])
-  //     .then( response => {
-  //       const facebookCredential = firebase.auth.FacebookAuthProvider
-  //         .credential(response.authResponse.accessToken);
-  
-  //       firebase.auth().signInWithCredential(facebookCredential)
-  //         .then( success => { 
-  //           console.log("Firebase success: " + success); 
-  //         });
-  
-  //     }).catch((error) => { console.log(error) });
-  // }
-
   LoginnWithGoogle() {
-    console.log("call to login googl");
     this.authService.nativeGoogleLogin()
       .then(res => {
-        console.log("respuesta96 login");
-        
-        console.log(res);
-        
         this.popToRoot();
       })
       .catch((error) => {
-        console.log(error);
-
         this.handleError(error);
-        //  this.toastCtrl.create({ duration: 3000, position: 'bottom', message: error })
-        //  .present();
       });
   }
 
@@ -157,6 +124,7 @@ export class LoginPage {
     });
     forgot.present();
   }
+
   resetPassword() {
     this.navCtrl.push(PrincipalPage);
     //this.authService.resetPassword()
@@ -210,6 +178,17 @@ export class LoginPage {
     });
     toast.present();
 
+  }
+
+
+
+  presentAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['Aceptar']
+    });
+    alert.present();
   }
 
 
