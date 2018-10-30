@@ -27,19 +27,19 @@ export class SlidersPage {
   ) {
     this.slides = [
       {
-        title: 'Welcome to <b>AdventurApp</b>',
-        description: 'AdventurApp es una aplicacion .',
-        image: 'assets/img/ica-slidebox-img-1.png',
+        title: 'Bienvenido <b>AdventurApp</b>',
+        description: 'Encuentra tus lugares favoritos.',
+        image: 'assets/img/slide1.png',
       },
       {
-        title: 'What is ION2Location?',
-        description: 'This template will contains all required setup for starting the process and implement in your buisiness logic',
-        image: 'assets/img/ica-slidebox-img-2.png',
+        title: 'Publica Tu Negocio',
+        description: 'Ubica tu dirección nosotros la publicamos por ti',
+        image: 'assets/img/slide2.png',
       },
       {
-        title: 'What is Ionic Platform?',
-        description: 'The <b>Ionic Platform</b> is a cloud platform for managing and scaling Ionic apps with integrated services like push notifications, native builds, user auth, and live updating.',
-        image: 'assets/img/ica-slidebox-img-3.png',
+        title: 'Califica los Lugares que Visitas',
+        description: 'Cuentale a los viajeares tus experiencias en los lugares que visitas',
+        image: 'assets/img/slider3.png',
       }
     ];
   }

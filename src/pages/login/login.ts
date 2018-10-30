@@ -5,11 +5,7 @@ import { RegisterPage } from "../register/register";
 import { Usuarios } from '../../providers/auth/user';
 import { AuthService } from '../../providers/auth/auth-service';
 import { Events } from 'ionic-angular';
-import { ForgotPasswordPage } from "../forgot-password/forgot-password";
 import { PrincipalPage } from "../principal/principal";
-import { Facebook } from '@ionic-native/facebook';
-import * as firebase from 'firebase';
-import { GooglePlus } from '@ionic-native/google-plus';
 
 @Component({
   selector: 'page-login',
@@ -31,8 +27,6 @@ export class LoginPage {
     private authService: AuthService,
     public loadingCtrl: LoadingController,
     public events: Events,
-    private facebook: Facebook,
-    private googlePlus: GooglePlus,
   ) {
   }
 
@@ -57,21 +51,18 @@ export class LoginPage {
   signInWithFacebook() {
     this.authService.signInWithFacebook()
       .then(res =>{
-        this.popToRoot();
       })
       .catch((error) => {
-        this.handleError(error);
-
+        this.presentAlert("Upss...", "Ocurrio un error vuelve a intentarlo")
       });
   }
 
   LoginnWithGoogle() {
     this.authService.nativeGoogleLogin()
       .then(res => {
-        this.popToRoot();
       })
       .catch((error) => {
-        this.handleError(error);
+        this.presentAlert("Upss...", "Ocurrio un error vuelve a intentarlo")
       });
   }
 
@@ -171,17 +162,6 @@ export class LoginPage {
     ]);
   }
 
-  handleError(err) {
-    var toast = this.toastCtrl.create({
-      duration: 3000,
-      message: err,
-    });
-    toast.present();
-
-  }
-
-
-
   presentAlert(title, message) {
     let alert = this.alertCtrl.create({
       title: title,
@@ -190,6 +170,4 @@ export class LoginPage {
     });
     alert.present();
   }
-
-
 }
