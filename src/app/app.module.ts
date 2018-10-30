@@ -13,15 +13,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EstablecimientosPage } from '../pages/establecimientos/establecimientos';
 import {HttpModule} from '@angular/http';
+
+//Providers
 import { AuthService } from '../providers/auth/auth-service';
 import{EstudianteService} from '../providers/auth/estudiante.service'
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { TermsPage } from '../pages/terms/terms';
-import {LoginPage} from "../pages/login/login";
-import {RegisterPage} from "../pages/register/register";
-import {RegistroLugaresPage} from '../pages/registro-lugares/registro-lugares';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+
 // import services 
 
 // Import library firbease
@@ -29,6 +29,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 // import pages
 // end import pages
+import { TermsPage } from '../pages/terms/terms';
+import {LoginPage} from "../pages/login/login";
+import {RegisterPage} from "../pages/register/register";
+import {RegistroLugaresPage} from '../pages/registro-lugares/registro-lugares';
 import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { MapPage } from '../pages/map/map';
@@ -128,7 +132,7 @@ const firebaseConfig = {
     SplashScreen,
     Camera,
     AuthService,
-
+    NativeGeocoder,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireAuth,
     AngularFireDatabase,
