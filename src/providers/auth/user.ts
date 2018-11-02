@@ -9,5 +9,7 @@ export class Usuarios {
  ciudad:string;
  id_ciudad:any;
  id_categoria:any;
+ latitude : any;
+ longitude: any
 
 }

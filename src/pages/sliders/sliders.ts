@@ -39,7 +39,7 @@ export class SlidersPage {
       {
         title: 'Califica los Lugares que Visitas',
         description: 'Cuentale a los viajeares tus experiencias en los lugares que visitas',
-        image: 'assets/img/slider3.png',
+        image: 'assets/img/slide3.png',
       }
     ];
   }

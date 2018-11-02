@@ -8,6 +8,7 @@ import { Config } from '../../providers/config';
 import { TermsPage } from '../terms/terms';
 import { EstudianteService } from '../../providers/auth/estudiante.service';
 import { Observable } from 'rxjs/Observable';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 /**
  * Generated class for the RegistroLugaresPage page.
  *
@@ -27,12 +28,16 @@ export class RegistroLugaresPage {
     categorias$: Observable<any[]>;
     ciudades$: Observable<any[]>;
     mensaje: string;
-
+    options: NativeGeocoderOptions = {
+        useLocale: true,
+        maxResults: 1
+    };
     constructor(public navCtrl: NavController, public nav: NavController,
         public loadingCtrl: LoadingController, public toastCtrl: ToastController,
         private authService: AuthService,
         private estudianteService: EstudianteService,
-        public config: Config
+        public config: Config,
+        private nativeGeocoder: NativeGeocoder
     ) {
         this.ciudades$ = this.getCiudades();
         /* this.datos$= this.estudianteService
@@ -48,6 +53,23 @@ export class RegistroLugaresPage {
         this.categorias$ = this.getCategorias();
 
     }
+
+    getLocationMap() {
+        this.nativeGeocoder.forwardGeocode('Colombia, ' + this.usuarios.ciudad + ', ' + this.usuarios.direccion, this.options)
+            .then((
+                coordinates: NativeGeocoderForwardResult[]) => {
+                console.log('The coordinates are latitude=' + coordinates[0].latitude + ' and longitude=' + coordinates[0].longitude)
+                this.registerLugares(coordinates[0].latitude, coordinates[0].longitude)
+            })
+            .catch((error: any) => {
+                console.log(error)
+            });
+    }
+
+
+
+
+
     getCategorias(): Observable<any> {
         return new Observable(observer => {
             firebase.database().ref('/AdventureApp/Categorias/').once('value', (items: any) => {
@@ -90,7 +112,7 @@ export class RegistroLugaresPage {
     }
 
 
-    registerLugares() {
+    checkUserMarket() {
         if (this.isterms) {
 
             var toaster = this.toastCtrl.create({
@@ -109,14 +131,19 @@ export class RegistroLugaresPage {
                 if (this.usuarios.perfilURL == null) {
                     this.usuarios.perfilURL = 'https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1';
                 }
-                this.authService.createUserWithEmailAndPasswordLugares(this.usuarios)
-                    //    .then(r => this.popToRoot()).catch(this.handleError);
-                    .then((res: any) => {
-                        this.popToRoot();
-                    }).catch((err) => {
+                this.getLocationMap();
+                // this.registerLugares()
+                
 
-                        this.handleError(err)
-                    });
+
+
+
+
+
+
+
+
+
 
             }
         } else {
@@ -124,6 +151,21 @@ export class RegistroLugaresPage {
             this.handleError(this.mensaje)
 
         }
+    }
+
+
+    registerLugares(latitude, longitude) {
+        this.authService.createUserWithEmailAndPasswordLugares(this.usuarios, latitude, longitude)
+        //    .then(r => this.popToRoot()).catch(this.handleError);
+        .then((res: any) => {
+            console.log(res);
+            
+            this.popToRoot();
+        }).catch((err) => {
+            console.log(err);
+            
+            this.handleError(err)
+        });
     }
 
     popToRoot() {

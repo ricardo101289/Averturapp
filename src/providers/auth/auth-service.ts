@@ -63,34 +63,87 @@ export class AuthService {
         });
         resolve(true);
       }).catch((err) => {
+        console.log(err);
+        
         reject(err);
       });
     })
     return promise;
   }
 
-  createUserWithEmailAndPasswordLugares(usuarios: Usuarios) {
+  // createUserWithEmailAndPasswordLugares(usuarios: Usuarios, latitud, longitude) {
+  //   console.log(latitud, longitude);
+    
+  //   var promise = new Promise((resolve, reject) => {
+  //     this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email, usuarios.password).then(value => {
+  //       this.us = value.user;
+  //       this.us.updateProfile({ displayName: usuarios.nombre, photoURL: usuarios.perfilURL });
+  //       console.log(this.us);
+        
+  //       this.angularFireAuth.auth.updateCurrentUser(this.us);
+  //       console.log(usuarios);
+        
+  //       this.afiredatabase.list('/AdventureApp/Usuarios/').update(this.angularFireAuth.auth.currentUser.uid, {
+  //         nit: usuarios.nit,
+  //         displayName: usuarios.nombre,
+  //         tipo_Servicio: usuarios.tipo_servicio,
+  //         dirección: usuarios.direccion,
+  //         ciudad: usuarios.ciudad,
+  //         email: usuarios.email,
+  //         perfilURL: usuarios.perfilURL,
+  //       }).catch(error =>{
+  //         console.log("updateCurrentUser");
+  //         console.log(error);
+          
+  //       });
+  //       this.angularFireAuth.auth.updateCurrentUser(this.us);
+  //       this.ciudadesListRef = firebase.database().ref('/AdventureApp/Ciudades').child(usuarios.ciudad).child('Establecimientos')
+  //         .child(usuarios.tipo_servicio).push(usuarios);
+  //       resolve(true);
+  //     }).catch((err) => {
+  //       console.log("error, createUserWithEmailAndPassword");
+  //       console.log(err);
+        
+  //       reject(err);
+  //     });
+  //   })
+  //   return promise;
+  // }
+  createUserWithEmailAndPasswordLugares(usuarios:Usuarios, latitude, longitude){ 
     var promise = new Promise((resolve, reject) => {
-      this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email, usuarios.password).then(value => {
+      this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email,usuarios.password).then(value => {
+        console.log("value", value);
+        
         this.us = value.user;
-        this.us.updateProfile({ displayName: usuarios.nombre, photoURL: usuarios.perfilURL });
+        console.log("this.pudateProfileDispleayUsuarios, ",usuarios);
+        
+        this.us.updateProfile({ displayName: usuarios.nombre, photoURL:'https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1'});
+        console.log("this.us.updateProfile ", this.us);
+        
         this.angularFireAuth.auth.updateCurrentUser(this.us);
-        this.afiredatabase.list('/AdventureApp/Usuarios/').update(this.angularFireAuth.auth.currentUser.uid, {
-          nit: usuarios.nit,
-          displayName: usuarios.nombre,
-          tipo_Servicio: usuarios.tipo_servicio,
-          dirección: usuarios.direccion,
-          ciudad: usuarios.ciudad,
-          email: usuarios.email,
-          perfilURL: usuarios.perfilURL,
-        });
-        this.angularFireAuth.auth.updateCurrentUser(this.us);
-        this.ciudadesListRef = firebase.database().ref('/AdventureApp/Ciudades').child(usuarios.ciudad).child('Establecimientos')
-          .child(usuarios.tipo_servicio).push(usuarios);
-        resolve(true);
-      }).catch((err) => {
-        reject(err);
-      });
+                 this.afiredatabase.list('/AdventureApp/Usuarios/').update(this.angularFireAuth.auth.currentUser.uid, {
+                     nit: usuarios.nit,
+                     displayName: usuarios.nombre, 
+                     tipo_Servicio:  usuarios.tipo_servicio,
+                     dirección:  usuarios.direccion,
+                     ciudad:usuarios.ciudad,
+                     email:  usuarios.email,  
+                     perfilURL:usuarios.perfilURL,
+                     latitud: latitude,
+                     longitude: longitude
+                }) ;
+                console.log("this.us updateCurretUser ", this.us);
+                
+                this.angularFireAuth.auth.updateCurrentUser(this.us);
+                console.log("lo que va establecimiento: ", usuarios);
+                usuarios.latitude = latitude;
+                usuarios.longitude = longitude
+                this.ciudadesListRef=firebase.database().ref('/AdventureApp/Ciudades').child(usuarios.ciudad).child('Establecimientos')
+                .child(usuarios.tipo_servicio).push(usuarios) ;
+                resolve(true);
+            }).catch((err) => {
+                reject(err);
+            });
     })
     return promise;
   }

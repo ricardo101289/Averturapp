@@ -48,11 +48,16 @@ export class RegisterPage {
     }
 
     createUser() {
+        console.log(this.usuarios);
+        
         this.authService.createUserWithEmailAndPassword(this.usuarios)
             .then((res: any) => {
+                console.log("res", res);
+                
                 this.popToRoot();
             }).catch((err) => {
-                this.presentAlert("Upss...", "Ocurrio un error por favor vuelve a intentarlo")
+                console.log("error: ", err);
+                this.presentAlert("", err)
             });
     }
 
