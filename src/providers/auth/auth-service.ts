@@ -270,17 +270,48 @@ export class AuthService {
 
   updateLocal(local) {
     var promise = new Promise((resolve, reject) => {
-    this.afiredatabase.list('/AdventureApp/Ciudades/' + local.ciudad + '/Establecimientos/' + local.tipo_servicio + '/').update(local.registerUnique, local
-    ).then(res => {
-      resolve('200');
-    })
-      .catch(error => {
-        reject(error);
-      });
+      this.afiredatabase.list('/AdventureApp/Ciudades/' + local.ciudad + '/Establecimientos/' + local.tipo_servicio + '/').update(local.registerUnique, local
+      ).then(res => {
+        resolve('200');
+      })
+        .catch(error => {
+          reject(error);
+        });
     });
     return promise
-
-
-
   }
+
+  uploadImage(imageURI) {
+    return new Promise<any>((resolve, reject) => {
+      let storageRef = firebase.storage().ref();
+      let imageRef = storageRef.child('image');
+      this.encodeImageUri(imageURI, function (image64) {
+        imageRef.putString(imageURI, 'data_url')
+          .then(snapshot => {
+            console.log(snapshot);
+            
+            resolve(snapshot.downloadURL)
+          }, err => {
+            console.log(err)
+            reject(err);
+          })
+      })
+    })
+  }
+
+  encodeImageUri(imageUri, callback) {
+    var c = document.createElement('canvas');
+    var ctx = c.getContext("2d");
+    var img = new Image();
+    img.onload = function () {
+      var aux:any = this;
+      c.width = aux.width;
+      c.height = aux.height;
+      ctx.drawImage(img, 0, 0);
+      var dataURL = c.toDataURL("image/jpeg");
+      callback(dataURL);
+    };
+    img.src = imageUri;
+  };
+
 }

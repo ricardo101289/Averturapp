@@ -22,6 +22,14 @@
   <ion-grid>
       <ion-row style="height: 191px;">
           <ion-img src="{{local.perfilURL}}" class="imgItems"></ion-img>
+          <!-- <div class="image-upload" type="file" accept="image/*" onchange="handleFiles(this.files)">
+            <label for="file-input">
+              <img src="img/cam-20.svg" style="width: 29%;" />
+            </label>
+
+            <input id="file-input" type="file" accept="image/*" onchange="handleFiles(this.files)" />
+          </div> -->
+          <ion-icon class="editImg" ios="ios-camera" md="md-camera"><input id="file-input" type="file" accept="image/*" (change)="handleFiles($event)" /></ion-icon>
         </ion-row>
         <ion-row>
             <ion-list>

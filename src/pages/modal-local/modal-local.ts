@@ -17,6 +17,9 @@ export class ModalLocalPage {
   local : any
   establecimiento : any
   loader : any
+  imgProfile: File
+  fileToUpload: File = null;
+  image: any
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -43,6 +46,55 @@ export class ModalLocalPage {
       
     })
   }
+
+
+  handleFiles(file){
+    let img = file.srcElement.files[0];
+    console.log(img);
+    
+    let myReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.image = myReader.result;
+      console.log(this.image);
+      
+      this.authService.uploadImage(this.image.substring(this.image)).then(res => {
+        console.log(res);
+        
+      }).catch(error => {
+        console.log(error);
+        
+      })
+      
+    }
+    myReader.readAsDataURL(img);
+  }
+
+
+
+
+  readThis(inputValue: any): void {
+    let imgFormat: any; 
+    console.log(inputValue);
+    
+    var file: File = inputValue.files[0]; var myReader: FileReader = new FileReader(); var separador = "."; var arregloDeImg = file.name.split(separador);
+    if(arregloDeImg[1]=== "png"){
+      imgFormat = 22 
+    }else{
+      imgFormat = 23
+    }
+    myReader.onloadend = (e) => {
+      this.image = myReader.result;
+      this.authService.uploadImage(this.image.substring(imgFormat, this.image.length)).then(res => {
+        console.log(res);
+        
+      }).catch(error => {
+        console.log(error);
+        
+      })
+    }
+    myReader.readAsDataURL(file);
+  }
+
 
   presentLoading(text) {
     this.loader = this.loadingCtrl.create({
