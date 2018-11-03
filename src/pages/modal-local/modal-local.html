@@ -1,0 +1,84 @@
+<!--
+  Generated template for the ModalLocalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{local.nombre}}</ion-title>
+    <ion-buttons start (click) = "dismiss()">
+        <div>
+            <ion-icon name="close-circle" class="closeIcon"></ion-icon>
+        </div>
+      </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+      <ion-row style="height: 191px;">
+          <ion-img src="{{local.perfilURL}}" class="imgItems"></ion-img>
+        </ion-row>
+        <ion-row>
+            <ion-list>
+                <ion-item>
+                  <ion-label color="primary">Nombre del Local:</ion-label>
+                  <ion-input placeholder="Nombre del Local" [(ngModel)]="local.nombre"></ion-input>
+                </ion-item>
+              
+                <!-- <ion-item>
+                  <ion-label color="primary" fixed>Ciudad:</ion-label>
+                  <ion-input type="tel" placeholder="Ciudad" [(ngModel)]="local.ciudad"></ion-input>
+                </ion-item> -->
+              
+                <ion-item>
+                    <ion-label color="primary" floating>Dirección</ion-label>
+                    <ion-input [(ngModel)]="local.direccion"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="primary" floating>Email</ion-label>
+                    <ion-input [(ngModel)]="local.email"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label color="primary" fixed>nit:</ion-label>
+                    <ion-input type="tel" placeholder="nit" [(ngModel)]="local.nit"></ion-input>
+                  </ion-item>
+                <!-- <ion-item>
+                  <ion-input type="number" placeholder="Number Input with no label"></ion-input>
+                </ion-item> -->
+              
+                <!-- <ion-item>
+                  <ion-label color="primary" stacked>Stacked Label</ion-label>
+                  <ion-input type="email" placeholder="Email Input"></ion-input>
+                </ion-item>
+              
+                <ion-item>
+                  <ion-label color="primary" stacked>Stacked Label</ion-label>
+                  <ion-input type="password" placeholder="Password Input"></ion-input>
+                </ion-item>
+              
+                
+              
+                <ion-item>
+                  <ion-input placeholder="Clear Input" clearInput></ion-input>
+                </ion-item>
+              
+                <ion-item>
+                  <ion-textarea placeholder="Enter a description"></ion-textarea>
+                </ion-item>
+                -->
+              </ion-list> 
+        </ion-row>
+  </ion-grid>
+</ion-content>
+
+
+<ion-footer>
+    <button ion-button class="button-tipti-comprado" (click) = "editLocal(local)">Guardar</button>
+  </ion-footer>

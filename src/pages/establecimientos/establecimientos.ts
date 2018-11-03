@@ -62,8 +62,6 @@ export class EstablecimientosPage {
         },
         (error) =>
         {
-           console.log("Observer error: ", error);
-           console.dir(error);
            observer.error(error)
         });
      

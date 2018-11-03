@@ -64,3 +64,35 @@ body {
 }
 
 
+.peidoNumber{
+    font-size: 0.8125em;
+    color: #ff9012;
+}
+
+.itemsNumber{
+    position: absolute;
+    /* top: 17px; */
+    right: 20px;
+    color: #cfde00;
+    font-size: 0.7em;
+}
+
+.horaEntrega{
+    font-size: 0.75em;
+    color: #E73F51;
+}
+
+.estadoPedido{
+    font-size: 0.75em;
+    color: #666;
+}
+
+.imgPedidos{
+  margin-top: 22%;
+    width: 100%;
+}
+
+.dia_siguiente{
+    background-color: #CFDE00;
+    color: #fff !important;
+}

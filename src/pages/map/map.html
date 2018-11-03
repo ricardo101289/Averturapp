@@ -1,15 +1,64 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Map</ion-title>
+    <ion-title>Mis Sitios</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="map-page">
-  <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas">
-    
+
+  <ion-row>
+    <ion-col col-12 *ngIf="Establishments">
+      <!-- Pedidos Normales -->
+      <div class="urgentes_p" *ngFor="let item of Establishments">
+        
+        <div *ngIf="local.length > 0">
+          <a class="item item-icon-left anchor-shopper" *ngFor="let locales of local">
+              <div class="item item-divider item-divider-shopper_gray" *ngIf="locales.tipo_servicio === item.tipo">
+                  {{item.tipo}}
+                </div>
+            <div class="data-pedido" *ngIf="locales.tipo_servicio === item.tipo">
+              <ion-row>
+                <ion-col col-3>
+                  <img src="assets/img/vistahermosa.png" class="imgPedidos" alt="">
+                </ion-col>
+                <ion-col col-9 style="margin-left: 0%">
+                  <ion-row>
+                    <ion-col col-8>
+                      <div class="peidoNumber">
+                        {{locales.nombre}}
+                      </div>
+                    </ion-col>
+                    <ion-col col-4>
+                      <div class="itemsNumber" (click) = "editLocal(locales, item)">
+                        Editar
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-12>
+                      <div class="horaEntrega">
+                        {{locales.direccion}}
+                      </div>
+                    </ion-col>
+                    <ion-col col-12>
+                      <div class="estadoPedido">
+                        <div>Abierto desde las 6-am hasta las 7-pm</div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </div>
+          </a>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas">
+    #034378), to(#2d4e68)
   </div>
   <div class="row">
     <div class="example-1 card">
@@ -30,5 +79,5 @@
   </div>
   <button ion-button block color="dark" tappable (click)="signOut()">
       Regístrate
-    </button>
+    </button> -->
 </ion-content>

@@ -1,0 +1,29 @@
+page-modal-local {
+
+}
+
+.imgItems{
+    width: 60%;
+    margin-left: 25%;
+}
+
+
+.button-tipti-comprado {
+    border-radius: 25px;
+    height: 40px;
+    display: inline-block;
+    background: #488aff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f8a852), to(#ff9012));
+    background-image: linear-gradient(to bottom, #488aff, #488aff);
+    border: 1px solid #f8a852;
+    border: none;
+    text-align: center;
+    color: #fff;
+    width: 80% !important;
+    margin-left: 10%;
+}
+
+.closeIcon{
+    font-size: 2em;
+    color: white;
+}
