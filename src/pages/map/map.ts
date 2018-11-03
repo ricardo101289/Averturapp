@@ -50,13 +50,21 @@ export class MapPage {
   editLocal(local, establecimiento){
     console.log(local);
     console.log(establecimiento);
-    this.openModal(local,establecimiento)
+    this.openModal(local,establecimiento, 'edit')
   }
 
-  openModal(local, establecimiento) {
-    let modal = this.modalCtrl.create('ModalLocalPage', { local: local, establecimiento: establecimiento });
+  newLocal(){
+    this.openModal("", "", 'add')
+  }
+
+  openModal(local, establecimiento, action) {
+    console.log("action send: ", action);
+    
+    let modal = this.modalCtrl.create('ModalLocalPage', { local: local, establecimiento: establecimiento, action : action });
     modal.present();
   }
+
+
 
 /*  public signOut() {
     this.authService.signOut()

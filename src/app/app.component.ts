@@ -27,10 +27,19 @@ export interface MenuItem {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
-  appMenuItems: Array<MenuItem>;
-  appMenuItems2: Array<MenuItem>;
-  public navCtrl: NavController;
-
+  public movi: any;
+  public navCtrl: NavController
+  appMenuItems = [
+    { title: 'Home', component: HomePage, icon: 'home' },
+    { title: 'Places', component: MapPage, icon: 'md-globe' },
+    { title: 'mi ubicacion', component: MapPage, icon: 'logo-rss' },
+    { title: 'Cotact', component: AboutPage, icon: 'md-mail' },
+    { title: 'About', component: AboutPage, icon: 'information-circle' },
+  ];
+  appMenuItems2 = [
+    { title: 'Account', component: UsuarioPage, icon: 'person' },
+  ];
+  
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -46,28 +55,20 @@ export class MyApp {
         this.rootPage = SlidersPage;// PrincipalPage;//
       }
     });
-    // this.rootPage = SlidersPage;
-
-    this.appMenuItems = [
-      { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Places', component: MapPage, icon: 'md-globe' },
-      { title: 'mi ubicacion', component: MapPage, icon: 'logo-rss' },
-      { title: 'Cotact', component: AboutPage, icon: 'md-mail' },
-      { title: 'About', component: AboutPage, icon: 'information-circle' },
-
-      // {title: 'Local Weather', component: LocalWeatherPage, icon: 'partly-sunny'}
-    ];
-
-    this.appMenuItems2 = [
-      { title: 'Account', component: UsuarioPage, icon: 'person' },
-    ];
 
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+      console.log("ionic ready");
       statusBar.styleDefault();
       splashScreen.hide();
     });
+  }
+
+  getCities(){
+
+  }
+
+  getCategorys(){
+    
   }
 
   openPage(appMenuItems) {
@@ -89,8 +90,6 @@ export class MyApp {
     this.nav.push(UsuarioPage);
 
   }
-
-  public movi: any;
 
   usuarioCurren() {
     this.movi = this.getUsuario();
@@ -118,6 +117,7 @@ export class MyApp {
           });
     });
   }
+
 }
 
 

@@ -20,14 +20,34 @@ export class ModalLocalPage {
   imgProfile: File
   fileToUpload: File = null;
   image: any
+  actionLocal : any
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController,
     private authService: AuthService,
     public loadingCtrl: LoadingController) {
-    this.local = navParams.get('local')
-    this.establecimiento = navParams.get('establecimiento')
+      this.actionLocal = navParams.get('action')
+      console.log(this.actionLocal);
+      
+      if (navParams.get('action') === "edit") {
+        this.local = navParams.get('local')
+        this.establecimiento = navParams.get('establecimiento')
+      }else{
+        this.local = {
+          ciudad : "",
+          direccion : "",
+          email : "",
+          latitude : "",
+          longitude : "",
+          nit : "",
+          nombre : "",
+          password : "",
+          perfilURL : "https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1",
+          registerUnique : "",
+          tipo_servicio : ""
+        }
+      }
   }
 
   ionViewDidLoad() {
@@ -47,30 +67,35 @@ export class ModalLocalPage {
     })
   }
 
+  addLocal(local){
+    this.presentLoading("Añadiendo registro...")
+    this.authService.updateLocal(local).then(res =>{
+      this.hideLoading()
+      this.dismiss();
+    }).catch(error=>{
+      console.log(error);
+      
+    })
+  }
 
-  handleFiles(file){
+  handleFiles(file, local){
+    this.presentLoading("Actualizando Imagen de local...")
     let img = file.srcElement.files[0];
-    console.log(img);
-    
     let myReader = new FileReader();
     myReader.onloadend = (e) => {
       this.image = myReader.result;
-      console.log(this.image);
-      
       this.authService.uploadImage(this.image.substring(this.image)).then(res => {
         console.log(res);
-        
+        local.perfilURL = res
+        this.hideLoading()
+        this.editLocal(local)
       }).catch(error => {
         console.log(error);
-        
+        this.hideLoading()
       })
-      
     }
     myReader.readAsDataURL(img);
   }
-
-
-
 
   readThis(inputValue: any): void {
     let imgFormat: any; 

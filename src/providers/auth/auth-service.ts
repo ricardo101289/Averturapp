@@ -71,44 +71,6 @@ export class AuthService {
     return promise;
   }
 
-  // createUserWithEmailAndPasswordLugares(usuarios: Usuarios, latitud, longitude) {
-  //   console.log(latitud, longitude);
-
-  //   var promise = new Promise((resolve, reject) => {
-  //     this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email, usuarios.password).then(value => {
-  //       this.us = value.user;
-  //       this.us.updateProfile({ displayName: usuarios.nombre, photoURL: usuarios.perfilURL });
-  //       console.log(this.us);
-
-  //       this.angularFireAuth.auth.updateCurrentUser(this.us);
-  //       console.log(usuarios);
-
-  //       this.afiredatabase.list('/AdventureApp/Usuarios/').update(this.angularFireAuth.auth.currentUser.uid, {
-  //         nit: usuarios.nit,
-  //         displayName: usuarios.nombre,
-  //         tipo_Servicio: usuarios.tipo_servicio,
-  //         dirección: usuarios.direccion,
-  //         ciudad: usuarios.ciudad,
-  //         email: usuarios.email,
-  //         perfilURL: usuarios.perfilURL,
-  //       }).catch(error =>{
-  //         console.log("updateCurrentUser");
-  //         console.log(error);
-
-  //       });
-  //       this.angularFireAuth.auth.updateCurrentUser(this.us);
-  //       this.ciudadesListRef = firebase.database().ref('/AdventureApp/Ciudades').child(usuarios.ciudad).child('Establecimientos')
-  //         .child(usuarios.tipo_servicio).push(usuarios);
-  //       resolve(true);
-  //     }).catch((err) => {
-  //       console.log("error, createUserWithEmailAndPassword");
-  //       console.log(err);
-
-  //       reject(err);
-  //     });
-  //   })
-  //   return promise;
-  // }
   createUserWithEmailAndPasswordLugares(usuarios: Usuarios, latitude, longitude) {
     var promise = new Promise((resolve, reject) => {
       this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email, usuarios.password).then(value => {
@@ -281,37 +243,34 @@ export class AuthService {
     return promise
   }
 
-  uploadImage(imageURI) {
-    return new Promise<any>((resolve, reject) => {
-      let storageRef = firebase.storage().ref();
-      let imageRef = storageRef.child('image');
-      this.encodeImageUri(imageURI, function (image64) {
-        imageRef.putString(imageURI, 'data_url')
-          .then(snapshot => {
-            console.log(snapshot);
-            
-            resolve(snapshot.downloadURL)
-          }, err => {
-            console.log(err)
-            reject(err);
-          })
-      })
-    })
+  addLocal(){
+
   }
 
-  encodeImageUri(imageUri, callback) {
-    var c = document.createElement('canvas');
-    var ctx = c.getContext("2d");
-    var img = new Image();
-    img.onload = function () {
-      var aux:any = this;
-      c.width = aux.width;
-      c.height = aux.height;
-      ctx.drawImage(img, 0, 0);
-      var dataURL = c.toDataURL("image/jpeg");
-      callback(dataURL);
-    };
-    img.src = imageUri;
-  };
+
+  uploadImage(imageString) : Promise<any>
+   {
+      let image       : string  = 'movie-' + new Date().getTime() + '.jpg',
+          storageRef  : any,
+          parseUpload : any;
+      return new Promise((resolve, reject) =>
+      {
+         storageRef       = firebase.storage().ref('images/' + image);
+         parseUpload      = storageRef.putString(imageString, 'data_url');
+         parseUpload.on('state_changed', (_snapshot) =>
+         {
+         },
+         (_err) =>
+         {
+            reject(_err);
+         },
+         (success) =>
+         {
+           parseUpload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            resolve(downloadURL);
+          });
+         });
+      });
+   }
 
 }

@@ -70,11 +70,11 @@ body {
 }
 
 .itemsNumber{
-    position: absolute;
-    /* top: 17px; */
-    right: 20px;
-    color: #cfde00;
-    font-size: 0.7em;
+  position: absolute;
+  /* top: 17px; */
+  right: 20px;
+  color: #cfde00;
+  font-size: 0.8em;
 }
 
 .horaEntrega{
@@ -95,4 +95,9 @@ body {
 .dia_siguiente{
     background-color: #CFDE00;
     color: #fff !important;
+}
+
+.iconnewLocal{
+  font-size: 2em;
+  color: azure;
 }

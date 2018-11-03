@@ -52,6 +52,7 @@ import { DetailPage } from '../pages/detail/detail';
 import { Config } from '../providers/config';
 import { GalleryPosterComponent } from './gallery-poster/gallery-poster';
 import {Targetas} from '../providers/auth/targetas'
+import { CitiesProvider } from '../providers/cities/cities';
 const firebaseConfig = {
   apiKey: "AIzaSyCa4Rg3iAaSYp1XnqfwmZDA95Kcsy1c5_g",
   authDomain: "adaventure-d4d5e.firebaseapp.com",
@@ -142,7 +143,8 @@ const firebaseConfig = {
     Config,
     ImagePicker,
  
-    ImageProvider
+    ImageProvider,
+    CitiesProvider
   ]
 })
 export class AppModule {}
