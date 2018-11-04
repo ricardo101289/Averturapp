@@ -12,6 +12,7 @@ import { PostPopover } from '../pages/speaker-list/post-popover';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { EstablecimientosPage } from '../pages/establecimientos/establecimientos';
+import { DetailLocalPage } from '../pages/detail-local/detail-local';
 import {HttpModule} from '@angular/http';
 
 //Providers
@@ -84,6 +85,7 @@ const firebaseConfig = {
     DetailPage,
     PostPopover,
     EstablecimientosPage,
+    DetailLocalPage,
     TermsPage,
     GalleryPosterComponent
      
@@ -126,6 +128,7 @@ const firebaseConfig = {
     TermsPage,
     PostPopover,
     EstablecimientosPage,
+    DetailLocalPage,
     GalleryPosterComponent
   ],
   providers: [

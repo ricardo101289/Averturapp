@@ -252,7 +252,6 @@ export class AuthService {
       firebase.database().ref('/AdventureApp/Categorias').child(category).child('/subcategorias')
         .once('value', (items: any) => {
           let user: any = [];
-
           items.forEach((item) => {
             // console.log(item.key);
             // console.log(typeof item.val());
@@ -262,6 +261,34 @@ export class AuthService {
               user.push(response)
             }
           });
+          resolve(user)
+        },
+          (error) => {
+            reject(error)
+          });
+
+    });
+    return promise
+  }
+
+  getComment(){
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('/AdventureApp/Comentarios')
+        .once('value', (items: any) => {
+          let user: any = [];
+          console.log(items);
+          
+          items.forEach((item) => {
+            // console.log(item.key);
+            console.log( item.val());
+            if (typeof item.val() === "object") {
+              // item.val().push({registerUnique : "hola"})
+              let response = item.val()
+              user.push(response)
+            }
+          });
+          console.log(user);
+          
           resolve(user)
         },
           (error) => {

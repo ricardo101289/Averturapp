@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { Ciudades } from '../../providers/auth/ciudades';
 import { AuthService } from '../../providers/auth/auth-service'
+import { DetailLocalPage } from '../detail-local/detail-local';
 
 @IonicPage()
 @Component({
@@ -46,6 +47,10 @@ export class EstablecimientosPage {
     }).catch(error =>{
       console.log(error);
     })
+  }
+
+  openModalLocal(local){
+    this.modalCtrl.create(DetailLocalPage, {local: local}).present();
   }
   
 

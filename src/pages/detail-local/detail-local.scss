@@ -1,0 +1,88 @@
+page-detail-local {
+
+}
+
+.camIco{
+    font-size: 2em;
+    color: aliceblue;
+}
+
+.imgItems{
+    // width: 60%;
+    // margin-left: 25%;
+    height: 200px;
+    width: 250px;
+}
+
+.editImg{
+    font-size: 2em;
+    color: coral;
+    margin-left: -13%;
+    z-index: 10;
+    height: 30px;
+}
+
+.inputImage{
+    margin-left: -61%;
+    position: absolute;
+    margin-top: 2%;
+    width: 49%;
+    height: 40px;
+    background-color: red;
+    opacity: 0; 
+}
+
+.openLocal{
+    float: right;
+    margin-right: 5%;
+    font-size: 0.7em !important;
+    width: 100%;
+    text-align: -webkit-right;
+}
+
+.nameLocal{
+    float: left;
+    margin-right: 5%;
+    font-size: 0.7em !important;
+}
+
+.stars{
+    float: right;
+    margin-right: 5%;
+    font-size: 0.7em !important;
+}
+
+.titleCard{
+    margin-top: 3%;
+}
+
+.social{
+    text-align: -webkit-right;
+    font-size: 1.4em;
+}
+
+.socialSeparete{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.publicaciones{
+    float: left;
+    font-size: 1.2em !important;
+    width: 50%;
+    text-align: -webkit-left;
+    /* margin-right: -5%; */
+    margin-left: 5%;
+    color: #488aff;
+    margin-bottom: 2%;
+}
+
+.addPublication{
+    font-size: 2em;
+}
+
+.contentpublicaciones{
+    float: left;
+    margin-top: 1%;
+    padding-right: 3%;
+}
