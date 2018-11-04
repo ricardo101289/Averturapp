@@ -17,12 +17,12 @@ export class SchedulePage {
   itemList: any[];
   relationship = "normal"
   // ciudad: Observable<any>;
-  ciudad : any
+  ciudad: any
   indice = 1
   public sumaIndustrial: any;
 
   @ViewChild('myNav') nav: NavController;
-  loader : any
+  loader: any
   constructor(
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
@@ -30,43 +30,33 @@ export class SchedulePage {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     private estudianteService: EstudianteService,
-    public cities : CitiesProvider
+    public cities: CitiesProvider
 
   ) {
     this.presentLoading("cargando Ciudades...")
     this.getCities()
-    // this.ciudad = this.estudianteService
-    //   .getCiudades()
-    //   .snapshotChanges()
-    //   .map(changes => {
-    //     return changes.map(c => ({
-    //       key: c.payload.key,
-    //       ...c.payload.val(),
-    //     }));
-    //   });
-    // console.log(this.ciudad);
   }
 
-  getCities(){
-    this.cities.getCities_1().then(res =>{
+  getCities() {
+    this.cities.getCities_1().then(res => {
       this.ciudad = res
       this.hideLoading()
-    }).catch(error =>{
+    }).catch(error => {
       this.hideLoading()
       console.log(error);
     })
   }
 
-  editMovi(movie) {
-    let params = { movie: movie },
-      modal = this.modalCtrl.create(ScheduleFilterPage, params);
-    modal.present();
+  openCategories(city) {
+    console.log(city);
+    
+    this.modalCtrl.create(ScheduleFilterPage, { city: city }).present();
   }
 
   segmentChanged(value) {
     this.relationship = value
     this.ciudad = this.ciudad
-    
+
   }
 
   presentLoading(text) {
@@ -76,7 +66,7 @@ export class SchedulePage {
     this.loader.present();
   }
 
-  hideLoading(){
+  hideLoading() {
     this.loader.dismiss();
   }
 

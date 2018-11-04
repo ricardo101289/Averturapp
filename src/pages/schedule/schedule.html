@@ -19,17 +19,17 @@
   </ion-segment>
 
   <div *ngIf="ciudad && relationship === 'normal'">
-    <ion-card *ngFor="let item of ciudad;" (click)="editMovi(item)">
+    <ion-card *ngFor="let item of ciudad;" (click)="openCategories(item.nombre)">
       <img src="{{item.foto}}" />
       <div class="card-title">{{item.nombre}} </div>
     </ion-card>
   </div>
   <div *ngIf="ciudad && relationship === 'grid'">
-    <div *ngFor="let item of ciudad;" (click)="editMovi(item)">
+    <div *ngFor="let item of ciudad;" (click)="openCategories(item.name)">
       <div style="width: 50%; float: left;">
         <ion-card>
           <img src="{{item.foto}}" />
-          <div class="card-title">{{item.nombre}} </div>
+          <div class="card-titlegrid">{{item.nombre}} </div>
         </ion-card>
       </div>
     </div>
