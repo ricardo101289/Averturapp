@@ -3,11 +3,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-
     <ion-title>Ciudades</ion-title>
   </ion-navbar>
-
 </ion-header>
+
 <ion-content class="card-background-page">
   <ion-segment [(ngModel)]="relationship" color="primary">
     <ion-segment-button value="'normal'" (click)="segmentChanged('normal')">
@@ -25,7 +24,7 @@
     </ion-card>
   </div>
   <div *ngIf="ciudad && relationship === 'grid'">
-    <div *ngFor="let item of ciudad;" (click)="openCategories(item.name)">
+    <div *ngFor="let item of ciudad;" (click)="openCategories(item.nombre)">
       <div style="width: 50%; float: left;">
         <ion-card>
           <img src="{{item.foto}}" />

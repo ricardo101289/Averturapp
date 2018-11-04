@@ -133,7 +133,7 @@ export class ModalLocalPage {
   }
 
   getLocal(tipo){
-    this.authService.getLocal(tipo).then(res =>{
+    this.authService.getLocalAll(tipo).then(res =>{
       let response : any = res
       if (response.length > 0) {
         for (let i in response){

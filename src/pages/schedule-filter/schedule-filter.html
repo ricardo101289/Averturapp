@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="cardsFor">
-    <ion-card class="contentCard imgLocal" *ngFor="let item of datos | async" (click)="editMovie(item)" [style.background-image]="getBackground(item.fotoBal)" >
+  <div class="cardsFor" *ngIf="authService.Establishments">
+    <ion-card class="contentCard imgLocal" *ngFor="let item of authService.Establishments" (click)="goEstablishments(item.tipo)" [style.background-image]="getBackground(item.fotoBal)" >
       <!-- <img class="img-fluid" src="{{item.fotoBal}}" /> -->
       <div class="card-title">{{item.tipo}} </div>
     </ion-card>

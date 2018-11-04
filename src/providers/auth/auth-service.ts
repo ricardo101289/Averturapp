@@ -184,25 +184,42 @@ export class AuthService {
   getEstablishments() {
     var promise = new Promise((resolve, reject) => {
       firebase.database().ref('/AdventureApp/Ciudades').child('Cali').child('/Establecimientos')
-        // .child('/Balnearios')
         .once('value', (items: any) => {
           let user: any = [];
-
           items.forEach((item) => {
             user.push(item.val())
-
           });
           resolve(user)
         },
           (error) => {
             reject(error)
           });
-
     });
     return promise
   }
 
-  getLocal(tipo) {
+  getLocal(city, tipo) {
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('/AdventureApp/Ciudades').child(city).child('/Establecimientos').child('/' + tipo)
+        .once('value', (items: any) => {
+          let user: any = [];
+          items.forEach((item) => {
+            if (typeof item.val() === "object") {
+              let response = item.val()
+              response.registerUnique = item.key
+              user.push(response)
+            }
+          });
+          resolve(user)
+        },
+          (error) => {
+            reject(error)
+          });
+    });
+    return promise
+  }
+
+  getLocalAll(tipo){
     var promise = new Promise((resolve, reject) => {
       firebase.database().ref('/AdventureApp/Ciudades').child('Cali').child('/Establecimientos').child('/' + tipo)
         // .child('/Balnearios')
@@ -217,6 +234,31 @@ export class AuthService {
               // item.val().push({registerUnique : "hola"})
               let response = item.val()
               response.registerUnique = item.key
+              user.push(response)
+            }
+          });
+          resolve(user)
+        },
+          (error) => {
+            reject(error)
+          });
+
+    });
+    return promise
+  }
+
+  getCategories(category){
+    var promise = new Promise((resolve, reject) => {
+      firebase.database().ref('/AdventureApp/Categorias').child(category).child('/subcategorias')
+        .once('value', (items: any) => {
+          let user: any = [];
+
+          items.forEach((item) => {
+            // console.log(item.key);
+            // console.log(typeof item.val());
+            if (typeof item.val() === "object") {
+              // item.val().push({registerUnique : "hola"})
+              let response = item.val()
               user.push(response)
             }
           });
