@@ -9,44 +9,29 @@
 
 </ion-header>
 <ion-content class="card-background-page">
-  <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged()">
-    <ion-segment-button value="'normal'">
+  <ion-segment [(ngModel)]="relationship" color="primary">
+    <ion-segment-button value="'normal'" (click)="segmentChanged('normal')">
       CIUDADES
     </ion-segment-button>
-    <ion-segment-button value="'grid'">
+    <ion-segment-button value="'grid'" (click)="segmentChanged('grid')">
       GRID DE CIUDADES
     </ion-segment-button>
   </ion-segment>
-  <div *ngIf="ciudad">
-    <ion-card *ngFor="let item of ciudad" (click)="editMovi(item)">
+
+  <div *ngIf="ciudad && relationship === 'normal'">
+    <ion-card *ngFor="let item of ciudad;" (click)="editMovi(item)">
       <img src="{{item.foto}}" />
       <div class="card-title">{{item.nombre}} </div>
-      <div class="card-subtitle">41 Listings</div>
     </ion-card>
   </div>
-  <!-- <ion-card *ngFor="let item of ciudad" (click)="editMovi(item)">
-    <img src="{{item.foto}}" />
-    <div class="card-title">{{item.nombre}} </div>
-    <div class="card-subtitle">41 Listings</div>
-  </ion-card> -->
-
-  <!--
-  <ion-card>
-    <img src="assets/img/card-amsterdam.png"/>
-    <div class="card-title">Palmira</div>
-    <div class="card-subtitle">64 Listings</div>
-  </ion-card>
-
-  <ion-card>
-    <img src="assets/img/card-sf.png"/>
-    <div class="card-title">Buga</div>
-    <div class="card-subtitle">72 Listings</div>
-  </ion-card>
-
-  <ion-card>
-    <img src="assets/img/card-madison.png"/>
-    <div class="card-title">Jamundi</div>
-    <div class="card-subtitle">28 Listings</div>
-  </ion-card>-->
-
+  <div *ngIf="ciudad && relationship === 'grid'">
+    <div *ngFor="let item of ciudad;" (click)="editMovi(item)">
+      <div style="width: 50%; float: left;">
+        <ion-card>
+          <img src="{{item.foto}}" />
+          <div class="card-title">{{item.nombre}} </div>
+        </ion-card>
+      </div>
+    </div>
+  </div>
 </ion-content>

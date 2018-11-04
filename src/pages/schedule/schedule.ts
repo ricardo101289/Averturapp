@@ -18,6 +18,7 @@ export class SchedulePage {
   relationship = "normal"
   // ciudad: Observable<any>;
   ciudad : any
+  indice = 1
   public sumaIndustrial: any;
 
   @ViewChild('myNav') nav: NavController;
@@ -59,13 +60,13 @@ export class SchedulePage {
   editMovi(movie) {
     let params = { movie: movie },
       modal = this.modalCtrl.create(ScheduleFilterPage, params);
-
     modal.present();
   }
 
-  segmentChanged() {
-    console.log(this.relationship);
-
+  segmentChanged(value) {
+    this.relationship = value
+    this.ciudad = this.ciudad
+    
   }
 
   presentLoading(text) {
