@@ -59,12 +59,20 @@
   <div>
     <div class="publicaciones">
       <div class="contentpublicaciones">Publicaciones</div>
-      <ion-icon ios="ios-add-circle" md="md-add-circle" color = "primary" class="addPublication" (click)="publicComment()" ></ion-icon>
+      <ion-icon ios="ios-add-circle" md="md-add-circle" color="primary" class="addPublication" (click)="publicComment()"></ion-icon>
     </div>
   </div>
-  <ion-card>
-    <ion-card-content>
-      Muy buen servicio y gran atencion excelente personal muy contento con la visita
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="comment">
+    <ion-card *ngFor="let item of comment">
+      <ion-card-content>
+        <div>
+          <img class="imgComment" src="{{item.perfilURL}}" />
+        </div>
+        <div class="commentUser">
+          {{item.comentario}}
+        </div>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

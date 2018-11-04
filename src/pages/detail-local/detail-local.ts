@@ -17,6 +17,7 @@ import { AuthService } from '../../providers/auth/auth-service'
 export class DetailLocalPage {
   @ViewChild('myNav') nav: NavController;
   local : any
+  comment : any
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -57,7 +58,6 @@ export class DetailLocalPage {
         {
           text: 'send',
           handler: data => {
-            console.log(data);
             this.sendComment(data.comentario)
           }
         }
@@ -68,16 +68,22 @@ export class DetailLocalPage {
 
   getComment(){
     this.authService.getComment().then(res =>{
-      console.log(res);
-      
+      this.comment = res
     }).catch(error =>{
       console.log(error);
-      
     })
   }
 
   sendComment(comment){
-
+    this.authService.sendComment({
+      comentario : comment,
+      perfilURL : this.authService.client.photoURL,
+      registerUnique : this.local.registerUnique
+    }).then(res =>{
+      this.getComment()
+    }).catch(error =>{
+      console.log(error);
+    })
   }
 
 }

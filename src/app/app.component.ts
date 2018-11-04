@@ -50,6 +50,7 @@ export class MyApp {
   ) {
     afAuth.authState.subscribe(user => {
       if (user) {
+        this.authService.client = user.providerData[0]
         this.rootPage = HomePage;
         this.usuarioCurren();
       } else {

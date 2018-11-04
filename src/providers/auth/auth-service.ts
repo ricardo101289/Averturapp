@@ -13,6 +13,7 @@ export class AuthService {
   private ciudadesListRef;
   Establishments : any
   local : any = []
+  client : any
   constructor(private angularFireAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private gplus: GooglePlus,
@@ -75,13 +76,10 @@ export class AuthService {
     var promise = new Promise((resolve, reject) => {
       this.angularFireAuth.auth.createUserWithEmailAndPassword(usuarios.email, usuarios.password).then(value => {
         console.log("value", value);
-
         this.us = value.user;
         console.log("this.pudateProfileDispleayUsuarios, ", usuarios);
-
         this.us.updateProfile({ displayName: usuarios.nombre, photoURL: 'https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' });
         console.log("this.us.updateProfile ", this.us);
-
         this.angularFireAuth.auth.updateCurrentUser(this.us);
         this.afiredatabase.list('/AdventureApp/Usuarios/').update(this.angularFireAuth.auth.currentUser.uid, {
           nit: usuarios.nit,
@@ -93,7 +91,6 @@ export class AuthService {
           perfilURL: usuarios.perfilURL
         });
         console.log("this.us updateCurretUser ", this.us);
-
         this.angularFireAuth.auth.updateCurrentUser(this.us);
         console.log("lo que va establecimiento: ", usuarios);
         usuarios.latitude = latitude;
@@ -276,9 +273,9 @@ export class AuthService {
       firebase.database().ref('/AdventureApp/Comentarios')
         .once('value', (items: any) => {
           let user: any = [];
-          console.log(items);
-          
           items.forEach((item) => {
+            console.log(item);
+            
             // console.log(item.key);
             console.log( item.val());
             if (typeof item.val() === "object") {
@@ -295,6 +292,16 @@ export class AuthService {
             reject(error)
           });
 
+    });
+    return promise
+  }
+
+  sendComment(comment){
+    console.log(comment);    
+    var promise = new Promise((resolve, reject) => {
+      this.ciudadesListRef = firebase.database().ref('/AdventureApp/Comentarios').push(comment).then(res =>{
+        resolve(res)
+      })
     });
     return promise
   }
