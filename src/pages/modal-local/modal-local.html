@@ -15,7 +15,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <ion-grid *ngIf="actionLocal === 'edit'">
     <ion-row style="height: 191px; justify-content: center;">
@@ -29,20 +28,14 @@
           <ion-label color="primary" floating>Nombre del Local</ion-label>
           <ion-input [(ngModel)]="local.nombre"></ion-input>
         </ion-item>
-        <!-- <ion-item>
-                  <ion-label color="primary" fixed>Ciudad:</ion-label>
-                  <ion-input type="tel" placeholder="Ciudad" [(ngModel)]="local.ciudad"></ion-input>
-                </ion-item> -->
         <ion-item>
           <ion-label color="primary" floating>Dirección</ion-label>
           <ion-input [(ngModel)]="local.direccion"></ion-input>
         </ion-item>
-
         <ion-item>
           <ion-label color="primary" floating>Email</ion-label>
           <ion-input [(ngModel)]="local.email"></ion-input>
         </ion-item>
-
         <ion-item>
           <ion-label color="primary" fixed>nit:</ion-label>
           <ion-input type="tel" placeholder="nit" [(ngModel)]="local.nit"></ion-input>
@@ -58,17 +51,24 @@
       <ion-icon class="editImg" ios="ios-camera" md="md-camera"><input class="inputImage" id="file-input" type="file"
           accept="image/*" (change)="handleFiles($event, local)" /></ion-icon>
     </ion-row>
-
     <ion-row>
         <ion-list>
           <ion-item>
             <ion-label color="primary" floating>Nombre del Local</ion-label>
             <ion-input [(ngModel)]="local.nombre"></ion-input>
           </ion-item>
-          <!-- <ion-item>
-                    <ion-label color="primary" fixed>Ciudad:</ion-label>
-                    <ion-input type="tel" placeholder="Ciudad" [(ngModel)]="local.ciudad"></ion-input>
-                  </ion-item> -->
+          <ion-item>
+            <ion-label color="primary">Ciudad</ion-label>
+            <ion-select [(ngModel)]="local.ciudad">
+              <ion-option *ngFor="let item of cities.cities" [value]="item.nombre">{{item.nombre}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary">Categoria</ion-label>
+            <ion-select [(ngModel)]="local.tipo_servicio">
+              <ion-option *ngFor="let item of cities.categorys" [value]="item.nombre">{{item.nombre}}</ion-option>
+            </ion-select>
+          </ion-item>
           <ion-item>
             <ion-label color="primary" floating>Dirección</ion-label>
             <ion-input [(ngModel)]="local.direccion"></ion-input>
@@ -83,33 +83,16 @@
             <ion-label color="primary" fixed>nit:</ion-label>
             <ion-input type="tel" placeholder="nit" [(ngModel)]="local.nit"></ion-input>
           </ion-item>
-          <!-- <ion-item>
-                    <ion-input type="number" placeholder="Number Input with no label"></ion-input>
-                  </ion-item> -->
-  
-          <!-- <ion-item>
-                    <ion-label color="primary" stacked>Stacked Label</ion-label>
-                    <ion-input type="email" placeholder="Email Input"></ion-input>
-                  </ion-item>
-                
-                  <ion-item>
-                    <ion-label color="primary" stacked>Stacked Label</ion-label>
-                    <ion-input type="password" placeholder="Password Input"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-input placeholder="Clear Input" clearInput></ion-input>
-                  </ion-item>
-                
-                  <ion-item>
-                    <ion-textarea placeholder="Enter a description"></ion-textarea>
-                  </ion-item>
-                  -->
         </ion-list>
       </ion-row>
   </ion-grid>
 </ion-content>
 
 
-<ion-footer>
+<ion-footer *ngIf="actionLocal === 'edit'">
   <button ion-button class="button-tipti-comprado" (click)="editLocal(local)">Guardar</button>
+</ion-footer>
+
+<ion-footer *ngIf="actionLocal === 'add'">
+  <button ion-button class="button-tipti-comprado" (click)="addNewLocal(local)">Guardar</button>
 </ion-footer>

@@ -15,15 +15,14 @@
 <ion-content class="map-page">
 
   <ion-row>
-    <ion-col col-12 *ngIf="Establishments">
-      <!-- Pedidos Normales -->
-      <div class="urgentes_p" *ngFor="let item of Establishments">
+    <ion-col col-12 *ngIf="authService.Establishments">
+      <div class="urgentes_p" *ngFor="let item of authService.Establishments">
         
-        <div *ngIf="local.length > 0">
-          <a class="item item-icon-left anchor-shopper" *ngFor="let locales of local">
-              <div class="item item-divider item-divider-shopper_gray" *ngIf="locales.tipo_servicio === item.tipo">
+        <div *ngIf="authService.local.length > 0">
+          <a class="item item-icon-left anchor-shopper" *ngFor="let locales of authService.local">
+              <!-- <div class="item item-divider item-divider-shopper_gray" *ngIf="locales.tipo_servicio === item.tipo">
                   {{item.tipo}}
-                </div>
+                </div> -->
             <div class="data-pedido" *ngIf="locales.tipo_servicio === item.tipo">
               <ion-row>
                 <ion-col col-3>
@@ -33,7 +32,7 @@
                   <ion-row>
                     <ion-col col-8>
                       <div class="peidoNumber">
-                        {{locales.nombre}}
+                        {{locales.tipo_servicio}}: {{locales.nombre}}
                       </div>
                     </ion-col>
                     <ion-col col-4>
@@ -62,27 +61,4 @@
       </div>
     </ion-col>
   </ion-row>
-  <!-- <div style="height: 100%; width: 100%" #mapCanvas id="map_canvas">
-    #034378), to(#2d4e68)
-  </div>
-  <div class="row">
-    <div class="example-1 card">
-      <div class="wrapper">
-      
-        <div class="data">
-          <div class="content">
-            <span class="author">Jane Doe</span>
-            <h1 class="title"><a href="#">Boxing icon has the will for a couple more fights</a></h1>
-            <p class="text">The highly anticipated world championship fight will take place at 10am and is the second major boxing blockbuster in the nation after 43 years.</p>
-            <label for="show-menu" class="menu-button"><span></span></label>
-          </div>
-      
-        </div>
-      </div>
-    </div>
- 
-  </div>
-  <button ion-button block color="dark" tappable (click)="signOut()">
-      Regístrate
-    </button> -->
 </ion-content>

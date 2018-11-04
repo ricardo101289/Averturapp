@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth/auth-service';
+import { CitiesProvider }  from '../../providers/cities/cities'
 /**
  * Generated class for the ModalLocalPage page.
  *
@@ -26,10 +27,11 @@ export class ModalLocalPage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     private authService: AuthService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public cities : CitiesProvider  
+  ) {
       this.actionLocal = navParams.get('action')
       console.log(this.actionLocal);
-      
       if (navParams.get('action') === "edit") {
         this.local = navParams.get('local')
         this.establecimiento = navParams.get('establecimiento')
@@ -51,27 +53,27 @@ export class ModalLocalPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ModalLocalPage');
-    console.log(this.local, this.establecimiento);
-    
   }
 
   editLocal(local){
     this.presentLoading("Actualizando registro...")
     this.authService.updateLocal(local).then(res =>{
       this.hideLoading()
-      this.dismiss();
+      this.updateEstablishments()
     }).catch(error=>{
       console.log(error);
       
     })
   }
-
-  addLocal(local){
+  
+  addNewLocal(local){
+    console.log(local);
+    // this.setCoordinate(local.direccion)
     this.presentLoading("Añadiendo registro...")
-    this.authService.updateLocal(local).then(res =>{
+    this.authService.addLocal(local).then(res =>{
+      console.log(res);
       this.hideLoading()
-      this.dismiss();
+      this.updateEstablishments()
     }).catch(error=>{
       console.log(error);
       
@@ -85,10 +87,8 @@ export class ModalLocalPage {
     myReader.onloadend = (e) => {
       this.image = myReader.result;
       this.authService.uploadImage(this.image.substring(this.image)).then(res => {
-        console.log(res);
         local.perfilURL = res
         this.hideLoading()
-        this.editLocal(local)
       }).catch(error => {
         console.log(error);
         this.hideLoading()
@@ -99,8 +99,6 @@ export class ModalLocalPage {
 
   readThis(inputValue: any): void {
     let imgFormat: any; 
-    console.log(inputValue);
-    
     var file: File = inputValue.files[0]; var myReader: FileReader = new FileReader(); var separador = "."; var arregloDeImg = file.name.split(separador);
     if(arregloDeImg[1]=== "png"){
       imgFormat = 22 
@@ -111,15 +109,45 @@ export class ModalLocalPage {
       this.image = myReader.result;
       this.authService.uploadImage(this.image.substring(imgFormat, this.image.length)).then(res => {
         console.log(res);
-        
       }).catch(error => {
         console.log(error);
-        
       })
     }
     myReader.readAsDataURL(file);
   }
 
+  updateEstablishments(){
+    this.authService.local =  []
+    this.presentLoading("Actualizando registro...")
+    this.authService.getEstablishments().then(res =>{
+      this.authService.Establishments = res
+      for(let i in this.authService.Establishments){
+        this.getLocal(this.authService.Establishments[i].tipo)
+      }
+      this.hideLoading()
+      this.viewCtrl.dismiss();
+    }).catch(error =>{
+      console.log(error);
+      this.dismiss()
+    })
+  }
+
+  getLocal(tipo){
+    this.authService.getLocal(tipo).then(res =>{
+      let response : any = res
+      if (response.length > 0) {
+        for (let i in response){
+          this.authService.local.push(response[i])
+        }
+        console.log(this.authService.local);
+      }
+    }).catch(error =>{
+      console.log("error Local: ", error);
+      this.hideLoading()
+      this.viewCtrl.dismiss();
+    }
+    )
+  }
 
   presentLoading(text) {
     this.loader = this.loadingCtrl.create({

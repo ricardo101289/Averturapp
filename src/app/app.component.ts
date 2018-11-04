@@ -10,7 +10,7 @@ import { UsuarioPage } from '../pages/usuario/usuario';
 import { SlidersPage } from '../pages/sliders/sliders';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
-
+import {CitiesProvider} from '../providers/cities/cities'
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import { MapPage } from '../pages/map/map';
@@ -46,6 +46,7 @@ export class MyApp {
     splashScreen: SplashScreen,
     public afAuth: AngularFireAuth,
     private authService: AuthService,
+    public cities : CitiesProvider
   ) {
     afAuth.authState.subscribe(user => {
       if (user) {
@@ -55,25 +56,31 @@ export class MyApp {
         this.rootPage = SlidersPage;// PrincipalPage;//
       }
     });
-
+    this.getCities()
     platform.ready().then(() => {
-      console.log("ionic ready");
       statusBar.styleDefault();
       splashScreen.hide();
     });
   }
 
   getCities(){
-
+    this.cities.getCities().then(res =>{
+      this.cities.cities = res
+      this.getCategorys()
+    }).catch(error =>{
+      error
+    })
   }
 
   getCategorys(){
-    
+    this.cities.getCategorys().then(res =>{
+      this.cities.categorys = res
+    }).catch(error =>{
+      error
+    })
   }
 
   openPage(appMenuItems) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(appMenuItems.component);
   }
   public signOut() {
