@@ -33,6 +33,8 @@ export class MapPage {
   }
 
   getLocal(tipo){
+    console.log(tipo);
+    
     this.authService.getLocalAll(tipo).then(res =>{
       let response : any = res
       if (response.length > 0) {

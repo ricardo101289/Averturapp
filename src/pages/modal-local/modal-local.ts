@@ -23,6 +23,7 @@ export class ModalLocalPage {
   fileToUpload: File = null;
   image: any
   actionLocal : any
+  subCategories : any = []
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -31,6 +32,8 @@ export class ModalLocalPage {
     public loadingCtrl: LoadingController,
     public cities : CitiesProvider  
   ) {
+    console.log(this.cities.categorys);
+    
       this.actionLocal = navParams.get('action')
       console.log(this.actionLocal);
       if (navParams.get('action') === "edit") {
@@ -46,15 +49,32 @@ export class ModalLocalPage {
           nit : "",
           nombre : "",
           password : "",
-          perfilURL : "https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1",
+          perfilURL : "https://firebasestorage.googleapis.com/v0/b/adaventure-d4d5e.appspot.com/o/images%2Fcali.png?alt=media&token=d75da7bd-7d42-4373-9a37-43da129b3a75",
           registerUnique : "",
-          tipo_servicio : ""
+          tipo_servicio : "",
+          subcategoria : ""
         }
       }
   }
 
   ionViewDidLoad() {
   }
+
+  getSubcategories(categories){
+    for (let i in this.cities.categorys){
+      if(this.cities.categorys[i].nombre === categories){
+        for(let j in this.cities.categorys[i].subcategorias){
+          this.subCategories.push(this.cities.categorys[i].subcategorias[j].nombre) 
+        }
+      }
+    }
+  }
+
+  onChange(newVal) {
+    console.log(newVal);
+    this.subCategories = []
+    this.getSubcategories(newVal)
+}
 
   editLocal(local){
     this.presentLoading("Actualizando registro...")
