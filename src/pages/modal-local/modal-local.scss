@@ -32,10 +32,10 @@ page-modal-local {
 
 .editImg{
     font-size: 2em;
-    color: coral;
     margin-left: -13%;
     z-index: 10;
     height: 30px;
+    color:  #f4f4f4;
 }
 
 .inputImage{
@@ -46,4 +46,8 @@ page-modal-local {
     height: 40px;
     background-color: red;
     opacity: 0; 
+}
+
+.textArea .text-input{
+    height: 110px;
 }

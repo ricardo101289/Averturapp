@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth/auth-service';
 import { CitiesProvider }  from '../../providers/cities/cities'
@@ -15,6 +15,7 @@ import { CitiesProvider }  from '../../providers/cities/cities'
   templateUrl: 'modal-local.html',
 })
 export class ModalLocalPage {
+  @ViewChild('myNav') nav: NavController;
   local : any
   establecimiento : any
   loader : any

@@ -13,16 +13,23 @@
 </ion-header>
 
 <ion-content class="map-page">
-
-  <ion-row>
+    <ion-list *ngFor="let item of authService.local" (click)="editLocal(item,'')" >
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="{{item.perfilURL}}">
+          </ion-thumbnail>
+          <h2>{{item.nombre}}</h2>
+          <p>{{item.direccion}}</p>
+          <p>Categoría: {{item.tipo_servicio}}</p>
+          <div class="line"></div>
+        </ion-item>
+      </ion-list>
+  <!-- <ion-row>
     <ion-col col-12 *ngIf="authService.Establishments">
       <div class="urgentes_p" *ngFor="let item of authService.Establishments">
         
         <div *ngIf="authService.local.length > 0">
           <a class="item item-icon-left anchor-shopper" *ngFor="let locales of authService.local">
-              <!-- <div class="item item-divider item-divider-shopper_gray" *ngIf="locales.tipo_servicio === item.tipo">
-                  {{item.tipo}}
-                </div> -->
             <div class="data-pedido" *ngIf="locales.tipo_servicio === item.tipo">
               <ion-row>
                 <ion-col col-3>
@@ -60,5 +67,10 @@
         </div>
       </div>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-content>
+
+
+<!-- <div class="item item-divider item-divider-shopper_gray" *ngIf="locales.tipo_servicio === item.tipo">
+                  {{item.tipo}}
+                </div> -->
